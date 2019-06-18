@@ -1,0 +1,55 @@
+VGG16 class Visualizer
+
+
+class VGG16_Visualizer():
+    def __init__(self, layer_names_list: list of strings - VGG16 specific,
+                       layer_weights_list: list of tuples - VGG16 specific,
+                       trained_weights_path: string - VGG16 specific,
+                       input_dimension: Tuple - input data dimension):
+
+
+     def Visualize_Content(self,
+                           file_path: string - path to a valid image,
+                           layer_name: string - layer to visualize,
+                           channel_nbr: int - channel to visualize):: returns nothing, shows two pictures
+
+        array_image = Read_image(file_path)
+            def Read_image(file_path: string - valid image_path):: returns a numpy array of the image,
+                                                                    of dimensions (y, x, channels)
+
+        reshaped_input_pic = Visualization_Tool_fit_image(file_path, self.input_dimension)
+            def Visualization_Tool_fit_image(file_path: string - path to a valid image,
+                                             input_dimension: tuple - input data dimensions):: returns numpy array
+                                                                                                of dimensions
+                                                                                                (batch, x, y, channels)
+
+
+        ad_hoc_model = self.Generate_and_Set_VGG16_Visualization_Model(layer_name, channel_nbr)
+
+            def Generate_and_Set_VGG16_Visualization_Model(layer_name: string - layer to visualize,
+                                                           channel_nbr: int - channel to visualize):: returns model
+
+
+                    - get layer number from name
+                    model = Build_end2end_VGG16_VT_Model(selected_layer_nbr, input_dimension)
+                        def Build_end2end_VGG16_VT_Model(selected_layer_nbr: int - selected layer corresponding number,
+                                                         input_dimension: tuple - input data dimensions):: returns model
+
+                    trained_encoder_weights = Retrieve_Encoder_weights(layer_name, trained_weights_path)
+                        def Retrieve_Encoder_weights(layer_name: string - layer to visualize,
+                                                     trained_weights_path: string - path to stored weights of
+                                                                           pre-trained VGG16):: returns list of numpy array pairs
+
+                    model_full_weights = Compose_VGG16_VT_weights(trained_encoder_weights)
+                        def Compose_VGG16_VT_weights(trained_encoder_weights: list of numpy arrays pairs ):: returns list of numpy arrays
+
+                    - modify weights
+
+                    model.set_weights(model_full_weights)
+
+
+        pixel_space_feature = ad_hoc_model.predict(reshaped_input_pic)
+
+        - plot starting image and pixel_space_feature
+
+
